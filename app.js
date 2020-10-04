@@ -1,7 +1,10 @@
 const express = require('express')
 const path = require('path')
+const env = require('dotenv')
+env.config()
+
 const { MongoDBConnection } = require('./utils/database.js')
-const connectionURL = 'mongodb://127.0.0.1:27017' // TODO: read url from environment
+const connectionURL = `mongodb://${process.env.URL}`
 const apiRoute = require('./routes/api_routes')
 const bodyParser = require('body-parser')
 const app = express()
@@ -23,7 +26,7 @@ app.post('/', (req, res) => {
 const init = async () => {
   try {
     await MongoDBConnection.connectToDatabase(connectionURL, 'surveyeazy')
-    app.listen(3000) // TODO: read port from environment
+    app.listen(`${process.env.PORT}`)
   } catch (err) {
     console.log(err)
   }
