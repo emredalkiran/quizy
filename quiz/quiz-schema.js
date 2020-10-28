@@ -1,6 +1,6 @@
 const Joi  = require('joi')
 const types = require('../utils/types')
-//console.log(Object.keys(types.quizTypes))
+
 const quizSchema = Joi.object({
   quizName: Joi.string().alphanum().min(3).max(50).required(),
   questions: Joi.array().items({
