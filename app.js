@@ -1,21 +1,18 @@
-const express = require('express')
-const path = require('path')
-const env = require('dotenv')
-env.config()
+import express from 'express'
+import path from 'path'
+import quizController from'./quiz/quiz-controller'
+import bodyParser from 'body-parser'
 
-const { MongoDBConnection } = require('./utils/database.js')
-const connectionURL = `mongodb://${process.env.URL}`
-const apiRoute = require('./routes/api_routes')
-const bodyParser = require('body-parser')
 const app = express()
 
 app.set('views', path.resolve(__dirname, 'views'))
 app.set('view engine', 'pug')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use('/api2', apiRoute)
-app.use(/^\/api\/v1\/[a-zA-Z0-9_.-]*$/, apiRoute)
+app.use('/api2', quizController)
+//app.use(/^\/api\/v1\/[a-zA-Z0-9_.-]*$/, quizController)
 app.get('/', (req, res) => {
+  console.log("Request received");
   res.send('Homepage')
 })
 app.post('/', (req, res) => {
@@ -23,12 +20,4 @@ app.post('/', (req, res) => {
   res.send('Hello')
 })
 
-const init = async () => {
-  try {
-    await MongoDBConnection.connectToDatabase(connectionURL, 'surveyeazy')
-    app.listen(`${process.env.PORT}`)
-  } catch (err) {
-    console.log(err)
-  }
-}
-init()
+module.exports = app

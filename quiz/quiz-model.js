@@ -6,14 +6,13 @@ class QuizModel {
     this.collection = db.collection('quizzes')
   }
   async addQuiz(quiz) {
-    const result = await this.collection.insertOne(quiz)
-    return result
+      return await this.collection.insertOne(quiz)
   }
 
   async updateQuiz(id, questions) {
     const result = await this.collection.updateOne(
       { _id: id },
-      { $push: { questions: { $each: questions } } }
+      { $push: { questions: { $each: questions }}}
     )
     return result
   }
@@ -22,7 +21,7 @@ class QuizModel {
     return result
   }
   async deleteQuizes(ids) {
-    const result = await this.collection.deleteMany({ _id: { $in: ids } })
+    const result = await this.collection.deleteMany({ _id: { $in: ids }})
     return result
   }
   async getQuiz(id) {

@@ -1,4 +1,7 @@
 
-const types = {typeText: 'text', typeImg: 'image'}
+const quizTypes = { 
+  typeText: 'text', 
+  typeImg: 'image' 
+}
 
-module.exports = { types }
+module.exports = { quizTypes }
