@@ -1,7 +1,7 @@
 const Joi  = require('joi')
 const types = require('../utils/types')
 
-const quizSchema = Joi.object({
+export const schema = Joi.object({
   quizName: Joi.string().alphanum().min(3).max(50).required(),
   questions: Joi.array().items({
     number: Joi.number().required(),
@@ -13,4 +13,4 @@ const quizSchema = Joi.object({
   creater: Joi.string().required(),
 })
 
-export default { quizSchema }
+
