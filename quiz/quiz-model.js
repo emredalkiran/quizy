@@ -1,33 +1,32 @@
-const db = require('../utils/database')
+const mongoClient = require('../utils/database')
 
 class QuizModel {
   constructor() {
-    this.db = db
-    this.collection = db.collection('quizzes')
   }
-  async addQuiz(quiz) {
-      return await this.collection.insertOne(quiz)
+  addQuiz(quiz) {
+    return mongoClient.db.collection('quizzes').insertOne(quiz)
   }
 
-  async updateQuiz(id, questions) {
-    const result = await this.collection.updateOne(
+  updateQuiz(id, questions) {
+    return mongoClient.db.collection('quizzes').updateOne(
       { _id: id },
       { $push: { questions: { $each: questions }}}
     )
-    return result
   }
-  async deleteQuiz(id) {
-    const result = await this.collection.deleteOne({ _id: id })
-    return result
+  
+  deleteQuiz(id) {
+    return mongoClient.db.collection('quizzes').collection.deleteOne({ _id: id })
   }
-  async deleteQuizes(ids) {
-    const result = await this.collection.deleteMany({ _id: { $in: ids }})
-    return result
+
+  deleteQuizes(ids) {
+    return mongoClient.db.collection('quizzes').deleteMany({ _id: { $in: ids }})
   }
-  async getQuiz(id) {
-    const result = await this.collection.findOne({ _id: id })
-    return result
+
+  getQuiz(id) {
+    return mongoClient.db.collection('quizzes').findOne({ _id: id })
   }
+  
 }
 
-module.exports = QuizModel
+const quizModel = new QuizModel()
+export default quizModel

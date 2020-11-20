@@ -1,24 +1,20 @@
 const MongoClient = require('mongodb').MongoClient
 //const assert = require('assert')
 
-class MongoDBConnection {
 
-  static async connectToDatabase(url,dbName) {
 
-    if (this.db) return this.db
+const mongoConnection = {
+  db: null,
+  async connectToDatabase(url,dbName) {
     try {
-      this.connection = await MongoClient.connect(url, { useNewUrlParser: true })
-      this.db = this.connection.db(dbName)
-      console.log("Connected to " + dbName)
-    }
-    catch (e) {
-      console.log(e) 
-    }
-    return this.db
+      if (!this.db) {
+        const connection = await MongoClient.connect(url, { useNewUrlParser: true })
+        this.db = connection.db(dbName)
+      }  
+    } catch (err) {
+      console.log(err)
+    } 
   }
 }
 
-MongoDBConnection.connection = null
-MongoDBConnection.db = null
-
-module.exports = { MongoDBConnection }
+export default mongoConnection

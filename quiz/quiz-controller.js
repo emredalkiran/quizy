@@ -1,7 +1,8 @@
 import express from 'express'
 import getRequestData from '../utils/get-request-data'
 import { httpHeader, statusCode } from '../utils/http-header'
-const quizService =  require('./quiz-service')
+import quizService from './quiz-service'
+
 const quizRouter = express.Router()
 
 quizRouter.post('/createquiz', async (req, res)=> {
@@ -13,15 +14,14 @@ quizRouter.post('/createquiz', async (req, res)=> {
       .set(httpHeader.json)
       .status(statusCode.success)
       .send(response)
-    }
-  catch(err) {
+  } catch(err) {
     res
     .set(httpHeader.json)
     .status(statusCode.badRequest)
-    .send(
-     { response: {
-        success: false,
-        error: err.message
+    .send({
+      response: {
+      success: false,
+      error: err.message
      }
     })
   }

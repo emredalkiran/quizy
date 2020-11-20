@@ -18,4 +18,16 @@ class DatabaseInsertError extends Error {
   }
 }
 
-module.exports = { ValidationError, DatabaseInsertError }
+class UserNotFoundError extends Error {
+  constructor (errorMessage) {
+    super(errorMessage)
+  }
+}
+
+class InvalidCredentialsError extends Error {
+  constructor (errorMessage) {
+    super(errorMessage)
+  }
+}
+
+module.exports = { ValidationError, DatabaseInsertError, UserNotFoundError, InvalidCredentialsError }

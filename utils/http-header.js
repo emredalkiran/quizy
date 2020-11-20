@@ -7,5 +7,6 @@ export const httpHeader = {
 export const statusCode = {
   success: 200,
   badRequest: 400,
+  unauthorized: 401,
   internalError: 500
 }

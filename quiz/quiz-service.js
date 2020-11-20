@@ -2,14 +2,14 @@ import { quizSchema } from './quiz-schema'
 import quizModel from './quiz-model'
 import { ValidationError, DatabaseInsertError } from '../utils/errors'
 
-class QuizService {
+ class QuizService {
   constructor() {}
 
   async createQuiz(request) {
     const { error, value } = quizSchema.validate(request.body)
     if (error) {
-        throw new ValidationError(error)
-      }
+      throw new ValidationError(error)
+    }
     try {
       const result = await quizModel.addQuiz(value)
       return JSON.stringify(result)
@@ -23,4 +23,6 @@ class QuizService {
 
   }
 }
-module.exports = new QuizService()
+
+const quizService = new QuizService()
+export default quizService

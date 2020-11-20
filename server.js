@@ -1,7 +1,7 @@
 
 import env from 'dotenv'
 import http from 'http'
-import { MongoDBConnection } from './utils/database'
+import MongoDBConnection from './utils/database'
 import app from './app'
 
 env.config()
@@ -12,7 +12,7 @@ const server = http.createServer(app)
 
 const init = async () => {
   try {
-    await MongoDBConnection.connectToDatabase(connectionURL, 'surveyeazy')
+    await MongoDBConnection.connectToDatabase(connectionURL, process.env.DATABASE_NAME)
     server.listen({host: 'localhost', port: port},()=> console.log("Server listening on" + server.address().port + " " + server.address().address))
   } catch (err) {
     console.log(err)

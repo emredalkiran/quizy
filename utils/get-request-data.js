@@ -1,6 +1,6 @@
 export default function getRequestData(request = {}) {
-  return Object.freeze({
+  return {
     body: request.body,
     queryParams: request.query
-  })
+  }
 }
