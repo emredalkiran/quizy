@@ -1,6 +1,7 @@
 import { userAuthenticationSchema, userSchema } from './user-schema'
 import userModel from './user-model'
 import { ValidationError, UserNotFoundError, InvalidCredentialsError, DatabaseInsertError } from '../utils/errors'
+import { errorMessages } from '../utils/error-messages'
 import bcrypt from 'bcrypt'
 
 class UserService {
@@ -38,10 +39,16 @@ class UserService {
     const hashedPassword = await this.hashPassword(value.password)
     const userData = this.setUserData(value, hashedPassword)
     try {
-      const result = await userModel.addUser(userData)
+      const queryResult = await userModel.addUser(userData)
+      const result = { success: 'true', id: queryResult.insrtedId }
       return JSON.stringify(result)
     } catch (err) {
-      throw new DatabaseInsertError(err)
+      if (err.code === 11000) {
+        throw new DatabaseInsertError(errorMessages.DUPLICATE_EMAIL)
+      }
+      else{
+        throw new DatabaseInsertError(errorMessages.UNKNOWN_ERROR)
+      }
     }
   }
 
