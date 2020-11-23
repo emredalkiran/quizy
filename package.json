@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "Emre Dalkiran <emre59dalkiran@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.1",
