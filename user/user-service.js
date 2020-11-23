@@ -40,7 +40,7 @@ class UserService {
     const userData = this.setUserData(value, hashedPassword)
     try {
       const queryResult = await userModel.addUser(userData)
-      const result = { success: 'true', id: queryResult.insrtedId }
+      const result = { success: 'true', id: queryResult.insertedId }
       return JSON.stringify(result)
     } catch (err) {
       if (err.code === 11000) {
