@@ -2,6 +2,7 @@ import { userAuthenticationSchema, userSchema } from './user-schema'
 import userModel from './user-model'
 import { ValidationError, UserNotFoundError, InvalidCredentialsError, DatabaseInsertError } from '../utils/errors'
 import { errorMessages } from '../utils/error-messages'
+import { databaseErrors } from '../utils/database-error-codes'
 import bcrypt from 'bcrypt'
 
 class UserService {
@@ -42,25 +43,13 @@ class UserService {
       const result = { success: 'true', id: queryResult.insertedId }
       return JSON.stringify(result)
     } catch (err) {
-      if (err.code === 11000) {
-        throw new DatabaseInsertError(errorMessages.DUPLICATE_EMAIL)
+      if (err.code === databaseErrors.DUPLICATE_KEY) {
+        return JSON.stringify({ success:false, error: "This email address is already in use" })
       }
       else{
         throw new DatabaseInsertError(errorMessages.UNKNOWN_ERROR)
       }
     }
-  }
-
-  async getUser(userCredentials) {
-    try {
-      const user = await userModel.findUserByEmail(userCredentials)
-      if (user)
-        return user
-      else 
-        return false
-     } catch (err) {
-      throw new UserNotFoundError("There is no user associated with provided credentials")
-     }
   }
 
   async validateUserCredentials(password, hashedPassword) {
