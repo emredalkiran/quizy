@@ -14,7 +14,6 @@ class UserService {
       }
     try {
       const hashedPassword = await userModel.getUserCredentialsByEmail(value.email)
-      console.log("Hashed password", hashedPassword)
       if (!hashedPassword) { 
         throw new UserNotFoundError("There is no user associated with provided credentials")
       }
@@ -22,7 +21,7 @@ class UserService {
       if (!isValidated) {
         throw new InvalidCredentialsError("Please check your email and password")
       }
-      const userDetails = await this.getUser(value.email)
+      const userDetails = await userModel.findUserByEmail(value.email)
       return JSON.stringify(userDetails)
       }
 

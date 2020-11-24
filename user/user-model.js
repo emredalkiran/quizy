@@ -10,13 +10,13 @@ class UserModel {
   getUserCredentialsByEmail(email) {
     return mongoClient.db.collection('users').find({ email: email }).toArray()
   }
-
-  deleteQuizes(ids) {
-    return mongoClient.db.collection('users').deleteMany({ _id: { $in: ids }})
-  }
   
-  getQuiz(id) {
+  findUserByID(id) {
     return mongoClient.db.collection('users').findOne({ _id: id })
+  }
+
+  findUserByEmail(email) {
+    return mongoClient.db.collection('users').findOne({ email: email })
   }
 
 }

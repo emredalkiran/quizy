@@ -10,5 +10,4 @@ export const userSchema = Joi.object({
   lastName: Joi.string().alphanum().min(2).max(50).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).max(15).required(),
-  passwordConfirmation: Joi.any().valid(Joi.ref('password')).required(), //TODO: Password complexity check should be added here.
 })
