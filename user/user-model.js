@@ -7,8 +7,8 @@ class UserModel {
     return mongoClient.db.collection('users').insertOne(quiz)
   }
 
-  getUserCredentialsByEmail(email) {
-    return mongoClient.db.collection('users').find({ email: email }).toArray()
+  getUserByEmail(email) {
+    return mongoClient.db.collection('users').findOne({ email: email })
   }
   
   findUserByID(id) {
