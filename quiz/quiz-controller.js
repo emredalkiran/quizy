@@ -21,7 +21,7 @@ quizRouter.post('/createquiz', async (req, res)=> {
     .send({
       response: {
       success: false,
-      error: err.message
+      error: err.errorMessage
      }
     })
   }

@@ -3,6 +3,8 @@ import getRequestData from '../utils/get-request-data'
 import { httpHeader, statusCode } from '../utils/http-header'
 import userService from './user-service'
 
+//TODO: use verify middleware for authentication??
+
 const userRouter = express.Router()
 
 userRouter.post('/login', async (req, res)=> {
@@ -21,7 +23,7 @@ userRouter.post('/login', async (req, res)=> {
     .send({
       response: {
       success: false,
-      error: err.message
+      error: err.errorMessage
      }
     })
   }
@@ -37,14 +39,14 @@ userRouter.post('/signup', async (req, res)=> {
       .status(statusCode.success)
       .send(response)
   } catch(err) {
-    res
-    .set(httpHeader.json)
-    .status(statusCode.badRequest)
-    .send({
-      response: {
-      success: false,
-      error: err.message
-     }
+      res
+        .set(httpHeader.json)
+        .status(statusCode.badRequest)
+        .send({
+          response: {
+          success: false,
+          error: err.errorMessage
+        }
     })
   }
 })
